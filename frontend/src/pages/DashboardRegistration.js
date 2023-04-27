@@ -64,7 +64,6 @@ function DashboardRegistration() {
     setLoading(true);
 
     try {
-      // const url = "http://localhost:8800";
       const baseUrl = process.env.REACT_APP_BASE_URL;
       console.log(baseUrl)
       const res = await fetch(`http://localhost:8800/api/auth/register`, {
