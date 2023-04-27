@@ -11,7 +11,7 @@ app.use(express.json()); // parses incoming requests with JSON payloads
 
 app.use(
   cors({
-    origin: "whatsbulk.vercel.app",
+    origin: "https://whatsbulk.vercel.app",
     credentials: true,
   })
 );
