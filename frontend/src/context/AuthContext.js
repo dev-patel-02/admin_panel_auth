@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
   // const baseUrl = process.env.REACT_APP_BASE_URL;
   const login = async (inputs) => {
     const res = await fetch(
-      `http://localhost:8800/api/auth/login`,
+      `https://admin-panel-auth.vercel.app/api/auth/login`,
       {
         method: "POST",
         credentials: "include",
@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async (inputs) => {
     const res = await fetch(
-      `http://localhost:8800/api/auth/logout`,
+      `https://admin-panel-auth.vercel.app/api/auth/logout`,
       {
         method: "POST",
         credentials: "include",
