@@ -3,6 +3,8 @@ import authRoutes from "./routes/auth.js";
 import cors from "cors";
 const app = express();
 const port = 8800;
+app.set("view engine", "ejs");
+
 // Middleware configuration
 // origin: "https://whatsbulk.vercel.app",
 
@@ -10,7 +12,7 @@ app.use(express.json()); // parses incoming requests with JSON payloads
 
 app.use(
   cors({
-    origin: "https://whatsbulk.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );

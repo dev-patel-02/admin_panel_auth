@@ -95,6 +95,15 @@ const login = (req, res) => {
   }
 };
 
+// There is very simple solution for this. Follow the following steps to send emails from your gmail using node (nodemailer)
+
+// Step1: Open this link https://myaccount.google.com/security
+// Step2: Enable 2 factor authentication
+// Click on App passwords just below the 2 factor authentication
+// From Select App options select Other and write your app name it could be any name like mycustomapp
+// It will generate you the password copy the password from the popup and use the following code.
+// Use that copied password in the Auth password section my password was this ediqcvvkjmuiurjx
+
 const logout = (req, res) => {
   res
     .clearCookie("access_token")
@@ -109,18 +118,18 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "tarequl.islalm@gmail.com",
-    pass: "@%@dev-dev#@%@trk",
+    pass: "ediqcvvkjmuiurjx",
   },
 });
 
-const resetPassword = (req, res) => {
+const resetPasswordMessage = (req, res) => {
   const { email } = req.body;
   const token = randomstring.generate();
-  console.log(token);
-  const resetLink = `https://admin-panel-auth.vercel.app/reset-password?token=${token}`;
+
+  const resetLink = `http://localhost:8800/api/auth/reset-password?token=${token}`;
 
   const mailOptions = {
-    from: "whatsbulk.com",
+    from: "whatsbulk.vercel.app",
     to: `${email}`,
     subject: "Password Reset Request",
     html: `<p>You requested a password reset for your account. Click the link below to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>`,
@@ -129,7 +138,6 @@ const resetPassword = (req, res) => {
     "SELECT * FROM registration where email = ? limit 1",
     email,
     function (err, data) {
-      console.log(data);
       if (err) {
         return res.status(400).json({ message: err });
       }
@@ -141,6 +149,7 @@ const resetPassword = (req, res) => {
             console.log("Email sent: " + info.response);
           }
         });
+        db.query(`DELETE FROM password_reset  where email=${db.escape(email)}`);
         db.query(
           `INSERT INTO password_reset (email, token) VALUES(${db.escape(
             email
@@ -153,4 +162,38 @@ const resetPassword = (req, res) => {
   );
 };
 
-export { register, login, logout, resetPassword };
+const resetPassword = (req, res) => {
+  try {
+    const token = req.query.token;
+    if (token === null) {
+      res.render("notFound");
+    }
+    db.query(
+      `SELECT * FROM password_reset where token = ? limit 1`,
+      token,
+      function (err, data) {
+        if (err) {
+          console.log(err);
+        }
+        console.log("data", data);
+        if (data.length > 0) {
+          db.query(
+            `SELECT * FROM registration where email=? limit 1`,
+            data[0].email,
+            function (err, result) {
+              if (err) {
+                console.log(err);
+              }
+              console.log(result);
+              res.render("reset-password", { user: result[0] });
+            }
+          );
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { register, login, logout, resetPasswordMessage, resetPassword };
