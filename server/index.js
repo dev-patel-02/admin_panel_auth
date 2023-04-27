@@ -7,10 +7,11 @@ const port = 8800;
 // origin: "https://admin-panel-three-tawny.vercel.app",
 
 app.use(express.json()); // parses incoming requests with JSON payloads
+// origin: "https://admin-panel-three-tawny.vercel.app",
+
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: "https://admin-panel-three-tawny.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
