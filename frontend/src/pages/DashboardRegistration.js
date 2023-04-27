@@ -65,7 +65,7 @@ function DashboardRegistration() {
     setLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:8800/api/auth/register`, {
+      const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/register`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(inputs),
