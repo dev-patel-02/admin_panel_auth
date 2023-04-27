@@ -31,7 +31,6 @@ function DashboardRegistration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     // clear error state
     setErrors((prev) => ({}));
 
@@ -65,6 +64,9 @@ function DashboardRegistration() {
     setLoading(true);
 
     try {
+      // const url = "http://localhost:8800";
+      const baseUrl = process.env.REACT_APP_BASE_URL;
+      console.log(baseUrl)
       const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/register`, {
         method: "POST",
         credentials: "include",

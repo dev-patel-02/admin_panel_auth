@@ -6,7 +6,7 @@ export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
-
+  // const baseUrl = process.env.REACT_APP_BASE_URL;
   const login = async (inputs) => {
     const res = await fetch(
       `https://admin-panel-auth.vercel.app/api/auth/login`,

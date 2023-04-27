@@ -15,7 +15,7 @@ import DashboardRegistration from "./pages/DashboardRegistration";
 
 function App() {
   const Protected = ({ isLoggedIn, children }) => {
-    console.log(isLoggedIn);
+    // console.log(isLoggedIn);
     if (!isLoggedIn) {
       return <Navigate to="/login" />;
     }
@@ -23,7 +23,7 @@ function App() {
   };
 
   const checkAuth = () => {
-    console.log(localStorage.getItem("user"));
+    // console.log(localStorage.getItem("user"));
 
     if (localStorage.getItem("user")) {
       return true;

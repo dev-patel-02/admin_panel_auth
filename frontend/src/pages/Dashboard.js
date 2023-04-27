@@ -12,7 +12,7 @@ import { BsMenuButtonWideFill } from "react-icons/bs";
 import { AuthContext } from "./../context/AuthContext";
 
 function Dashboard() {
-  const { currentUser, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   return (
     <div>
       <div className="flex md:hidden bg-purple-400">

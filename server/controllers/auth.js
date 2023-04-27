@@ -6,6 +6,7 @@ import randomstring from "randomstring";
 import nodemailer from "nodemailer";
 
 const register = (req, res) => {
+  console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -21,16 +22,14 @@ const register = (req, res) => {
       return res
         .status(422)
         .json({ status: 0, message: "User already exists!" });
-
     // Hash the password and create a user
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     // return false;
     const q = "INSERT INTO registration (email, name, password) VALUES (?)";
     const values = [req.body.email, req.body.username, hashedPassword];
-
     db.query(q, [values], (error, data) => {
-      console.log(data);
+      console.log("data", data);
       if (error) return res.json(error);
 
       const query = "SELECT * FROM registration WHERE id = ?";
