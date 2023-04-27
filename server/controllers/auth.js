@@ -117,7 +117,7 @@ const resetPassword = (req, res) => {
   const { email } = req.body;
   const token = randomstring.generate();
   console.log(token);
-  const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+  const resetLink = `https://admin-panel-auth.vercel.app/reset-password?token=${token}`;
 
   const mailOptions = {
     from: "whatsbulk.com",
