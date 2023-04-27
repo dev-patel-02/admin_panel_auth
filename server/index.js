@@ -4,14 +4,14 @@ import cors from "cors";
 const app = express();
 const port = 8800;
 // Middleware configuration
-// origin: "https://admin-panel-three-tawny.vercel.app",
+// origin: "https://whatsbulk.vercel.app",
 
 app.use(express.json()); // parses incoming requests with JSON payloads
-// origin: "https://admin-panel-three-tawny.vercel.app",
 
 app.use(
   cors({
-    origin: "https://whatsbulk.vercel.app",
+    origin: "http://localhost:3000",
+
     credentials: true,
   })
 );
