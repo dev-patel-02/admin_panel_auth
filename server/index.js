@@ -2,7 +2,7 @@ import express from "express";
 import authRoutes from "./routes/auth.js";
 import partyRoutes from "./routes/party.js";
 import cors from "cors";
-import { db } from "./db.js"; 
+import { db } from "./db.js";
 
 const app = express();
 const port = 8800;
@@ -17,7 +17,7 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
-app.use("/api/party",partyRoutes);
+app.use("/api/party", partyRoutes);
 
 app.get("/api/search", (req, res) => {
   const searchTerm = req.query.term;

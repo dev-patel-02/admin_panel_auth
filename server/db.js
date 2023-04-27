@@ -15,10 +15,10 @@ import mysql from "mysql2";
 //   });
 
 export const db = mysql.createPool({
-  host: "localhost", // replace with your hostname
-  user: "root", // replace with your username
-  password: "", // replace with your password
-  database: "userCollection", // replace with your database name
+  host: "bc9l2opzx6n6p4waxna6-mysql.services.clever-cloud.com", // replace with your hostname
+  user: "ucbklspytrzlwyno", // replace with your username
+  password: "nmpA3wrXcHpcP5c5FcCB", // replace with your password
+  database: "bc9l2opzx6n6p4waxna6", // replace with your database name
   //waitForConnections: true, // this will queue up new connections if all connections are in use
   // connectionLimit: 10, // this will limit the number of connections in the pool
   //queueLimit: 0, // this will put a limit on the number of queued connections

@@ -13,7 +13,7 @@ const register = (req, res) => {
   }
 
   // CHECK FOR EXISTING USER
-  const q = "SELECT * FROM login WHERE email = ? or name = ?";
+  const q = "SELECT * FROM registration WHERE email = ? or name = ?";
 
   db.query(q, [req.body.email, req.body.username], (error, data) => {
     if (error) return res.json(error);
@@ -26,14 +26,14 @@ const register = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     // return false;
-    const q = "INSERT INTO login (email, name, password) VALUES (?)";
+    const q = "INSERT INTO registration (email, name, password) VALUES (?)";
     const values = [req.body.email, req.body.username, hashedPassword];
 
     db.query(q, [values], (error, data) => {
       console.log(data);
       if (error) return res.json(error);
 
-      const query = "SELECT * FROM login WHERE id = ?";
+      const query = "SELECT * FROM registration WHERE id = ?";
 
       db.query(query, [data.insertId], (error, signInData) => {
         if (error) return res.json(error);
@@ -61,7 +61,7 @@ const login = (req, res) => {
 
   // CHECK USER EXISTS
 
-  const q = "SELECT * FROM login WHERE email = ?";
+  const q = "SELECT * FROM registration WHERE email = ?";
   try {
     db.query(q, [req.body.email], (error, data) => {
       if (error) return res.json(error);
@@ -127,7 +127,7 @@ const resetPassword = (req, res) => {
     html: `<p>You requested a password reset for your account. Click the link below to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>`,
   };
   db.query(
-    "SELECT * FROM login where email = ? limit 1",
+    "SELECT * FROM registration where email = ? limit 1",
     email,
     function (err, data) {
       console.log(data);
