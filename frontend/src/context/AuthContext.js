@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
   // const baseUrl = process.env.REACT_APP_BASE_URL;
   const login = async (inputs) => {
     const res = await fetch(
-      `https://admin-panel-auth.vercel.app/api/auth/login`,{'mode': 'no-cors'},
+      `https://admin-panel-auth.vercel.app/api/auth/login`,
       {
         method: "POST",
         credentials: "include",
