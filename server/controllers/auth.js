@@ -126,7 +126,7 @@ const resetPasswordMessage = (req, res) => {
   const { email } = req.body;
   const token = randomstring.generate();
 
-  const resetLink = `https://whatsbulk.vercel.app//reset/${token}`;
+  const resetLink = `https://whatsbulk.vercel.app/reset/${token}`;
 
   const mailOptions = {
     from: "whatsbulk",
@@ -139,7 +139,6 @@ const resetPasswordMessage = (req, res) => {
     "SELECT * FROM registration where email = ? limit 1",
     email,
     function (err, data) {
-      console.log(data)
       if (err) {
         return res.status(400).json({ message: err });
       }
@@ -148,7 +147,6 @@ const resetPasswordMessage = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            console.log(info)
             console.log("Email sent: " + info.response);
           }
         });

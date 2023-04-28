@@ -10,7 +10,7 @@ function ForgotPassword() {
     e.preventDefault();
     if (email) {
       const res = await fetch(
-        `https://admin-panel-auth.vercel.app/api/auth/reset`,
+        `http://localhost:8800/api/auth/reset`,
         {
           method: "POST",
           credentials: "include",
