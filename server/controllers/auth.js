@@ -172,8 +172,8 @@ const resetPasswordMessage = (req, res) => {
 const resetPasswordReq = (req, res) => {
   const data = req.body.resetData;
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(data.newPassword, salt);
-  db.query(`DELETE FROM password_reset where email=' ${data.email}'`);
+  const hash = bcrypt.hashSync(data?.newPassword, salt);
+  db.query(`DELETE FROM password_reset where email=' ${data?.email}'`);
   const query = `SELECT * FROM registration WHERE email = ?`;
 
   db.query(query, [data.email], (error, result) => {

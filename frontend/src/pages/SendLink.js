@@ -9,17 +9,14 @@ function SendLink() {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (email) {
-      const res = await fetch(
-        `https://admin-panel-auth.vercel.app/api/auth/reset`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: JSON.stringify({ email }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`http://localhost:8800/api/auth/reset`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       if (data.status === 1) {
