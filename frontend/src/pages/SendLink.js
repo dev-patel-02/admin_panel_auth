@@ -3,14 +3,14 @@ import { RxInfoCircled } from "react-icons/rx";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-function ForgotPassword() {
+function SendLink() {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (email) {
       const res = await fetch(
-        `http://localhost:8800/api/auth/reset`,
+        `https://admin-panel-auth.vercel.app/api/auth/reset`,
         {
           method: "POST",
           credentials: "include",
@@ -84,4 +84,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default SendLink;

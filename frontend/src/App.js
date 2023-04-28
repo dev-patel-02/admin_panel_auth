@@ -9,10 +9,10 @@ import Profile from "./components/Profile";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import DashboardLogin from "./pages/DashboardLogin";
-import ForgotPassword from "./pages/ForgotPassword";
 import AddForm from "./components/Party/AddForm";
 import DashboardRegistration from "./pages/DashboardRegistration";
-import Reset from './pages/ResetPassword';
+import Reset from "./pages/ResetPassword";
+import SendLink from "./pages/SendLink";
 
 function App() {
   const Protected = ({ isLoggedIn, children }) => {
@@ -40,7 +40,7 @@ function App() {
         <Route path="/reset/:token" element={<Reset />} />
         <Route path="/registration" element={<DashboardRegistration />}></Route>
         <Route path="/login" element={<DashboardLogin />}></Route>
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/forgot-password" element={<SendLink />}></Route>
         <Route
           path="/dashboard"
           element={
