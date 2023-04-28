@@ -126,10 +126,11 @@ const resetPasswordMessage = (req, res) => {
   const { email } = req.body;
   const token = randomstring.generate();
 
-  const resetLink = `http://localhost:8800/api/auth/reset-password?token=${token}`;
+  const resetLink = `whatsbulk.vercel.app/reset/${token}`;
 
   const mailOptions = {
     from: "whatsbulk.vercel.app",
+    // to: "whatsbulk.vercel.app",
     to: `${email}`,
     subject: "Password Reset Request",
     html: `<p>You requested a password reset for your account. Click the link below to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>`,
@@ -146,7 +147,7 @@ const resetPasswordMessage = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            console.log("Email sent: " + info.response);
+            // console.log("Email sent: " + info.response);
           }
         });
         db.query(`DELETE FROM password_reset  where email=${db.escape(email)}`);
@@ -155,45 +156,35 @@ const resetPasswordMessage = (req, res) => {
             email
           )},'${token}')`
         );
-        return res.status(200).send({ message: "Mail sent Successfuly" });
+
+        return res
+          .status(200)
+          .json({ status: 1, message: "Mail sent Successfuly" });
       }
-      return res.status(401).send({ message: "Email not exist" });
+      return res.status(201).json({ status: 0, message: "Email not exist" });
     }
   );
 };
 
-const resetPassword = (req, res) => {
-  try {
-    const token = req.query.token;
-    if (token === null) {
-      res.render("notFound");
+const resetPasswordReq = (req, res) => {
+  const data = req.body.resetData;
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(data.newPassword, salt);
+  db.query(`DELETE FROM password_reset where email=' ${data.email}'`);
+  const query = `SELECT * FROM registration WHERE email = ?`;
+
+  db.query(query, [data.email], (error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      db.query(
+        `UPDATE registration SET password = '${hash}' where id=' ${result[0].id}'`
+      );
+      res
+        .status(200)
+        .json({ status: 1, message: "Password reset successfully" });
     }
-    db.query(
-      `SELECT * FROM password_reset where token = ? limit 1`,
-      token,
-      function (err, data) {
-        if (err) {
-          console.log(err);
-        }
-        console.log("data", data);
-        if (data.length > 0) {
-          db.query(
-            `SELECT * FROM registration where email=? limit 1`,
-            data[0].email,
-            function (err, result) {
-              if (err) {
-                console.log(err);
-              }
-              console.log(result);
-              res.render("reset-password", { user: result[0] });
-            }
-          );
-        }
-      }
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  });
 };
 
-export { register, login, logout, resetPasswordMessage, resetPassword };
+export { register, login, logout, resetPasswordMessage, resetPasswordReq };

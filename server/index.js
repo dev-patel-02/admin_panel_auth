@@ -6,13 +6,14 @@ const port = 8800;
 app.set("view engine", "ejs");
 
 // Middleware configuration
-// origin: "https://whatsbulk.vercel.app",
+// origin: "http://localhost:3000"
+// ,
 
 app.use(express.json()); // parses incoming requests with JSON payloads
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://whatsbulk.vercel.app",
     credentials: true,
   })
 );

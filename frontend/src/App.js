@@ -12,6 +12,7 @@ import DashboardLogin from "./pages/DashboardLogin";
 import ForgotPassword from "./pages/ForgotPassword";
 import AddForm from "./components/Party/AddForm";
 import DashboardRegistration from "./pages/DashboardRegistration";
+import Reset from './pages/ResetPassword';
 
 function App() {
   const Protected = ({ isLoggedIn, children }) => {
@@ -36,6 +37,7 @@ function App() {
     <div className="">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/reset/:token" element={<Reset />} />
         <Route path="/registration" element={<DashboardRegistration />}></Route>
         <Route path="/login" element={<DashboardLogin />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>

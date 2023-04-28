@@ -5,26 +5,38 @@ import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const [success, setSuccess] = useState("");
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (email) {
-      const res = await fetch(`http://localhost:8800/api/auth/reset`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ email }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
+      const res = await fetch(
+        `https://admin-panel-auth.vercel.app/api/auth/reset`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
-      console.log(data);
+
+      if (data.status === 1) {
+        setSuccess(data.message);
+        setEmail("");
+      }
     }
   };
   return (
     <div className=" flex items-center justify-center pt-40 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-gray-200 py-6 px-6 rounded">
         <div>
+          {success && (
+            <p className="text-white text-center bg-green-500 my-8">
+              {success}
+            </p>
+          )}
           <p className="text-center flex justify-center normal-case text-3xl  text-[#B66DFF] Righteous">
             <RxInfoCircled size={60} />
           </p>
@@ -38,7 +50,7 @@ function ForgotPassword() {
         <form onSubmit={handleResetPassword} className="mt-2 space-y-2">
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="py-3">
-              <label for="email-address" className="sr-only">
+              <label htmlFor="email-address" className="sr-only">
                 Email address
               </label>
               <input
@@ -55,12 +67,11 @@ function ForgotPassword() {
           </div>
 
           <div>
-            <button
+            <input
               type="submit"
               className="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm  rounded-md text-white bg-[#B66DFF]  outline-none "
-            >
-              Submit
-            </button>
+              value="Submit"
+            />
           </div>
           <div className="flex justify-center pt-4">
             <Link to="/login" className=" flex items-center ">
