@@ -147,22 +147,22 @@ const resetPasswordMessage = (req, res) => {
           if (error) {
             console.log(error);
           }
+          console.log(info);
+
           if (info.response) {
             console.log("Email sent: " + info.response);
-            db.query(
-              `DELETE FROM password_reset  where email=${db.escape(email)}`
-            );
-            db.query(
-              `INSERT INTO password_reset (email, token) VALUES(${db.escape(
-                email
-              )},'${token}')`
-            );
-
-            return res
-              .status(200)
-              .json({ status: 1, message: "Mail sent Successfuly" });
           }
         });
+        db.query(`DELETE FROM password_reset  where email=${db.escape(email)}`);
+        db.query(
+          `INSERT INTO password_reset (email, token) VALUES(${db.escape(
+            email
+          )},'${token}')`
+        );
+
+        return res
+          .status(200)
+          .json({ status: 1, message: "Mail sent Successfuly" });
       }
       return res.status(201).json({ status: 0, message: "Email not exist" });
     }

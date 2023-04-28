@@ -17,14 +17,18 @@ export default function ResetPassword() {
         newPassword,
         token,
       };
-      const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/reset-password`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ resetData }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        `https://admin-panel-auth.vercel.app/api/auth/reset-password`,
+        {
+          method: "POST",
+          mode: "no-cors",
+          credentials: "include",
+          body: JSON.stringify({ resetData }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await res.json();
 
