@@ -65,7 +65,7 @@ function DashboardRegistration() {
 
     try {
       const baseUrl = process.env.REACT_APP_BASE_URL;
-      console.log(baseUrl)
+      // console.log(baseUrl)
       const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/register`, {
         method: "POST",
         credentials: "include",
