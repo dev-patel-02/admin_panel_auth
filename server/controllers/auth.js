@@ -117,8 +117,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "tarequl.islalm@gmail.com",
-    pass: "ediqcvvkjmuiurjx",
+    user: process.env.email,
+    pass: process.env.email_password,
   },
 });
 
@@ -126,10 +126,10 @@ const resetPasswordMessage = (req, res) => {
   const { email } = req.body;
   const token = randomstring.generate();
 
-  const resetLink = `http://localhost:3000/reset/${token}`;
+  const resetLink = `https://whatsbulk.vercel.app/reset/${token}`;
 
   const mailOptions = {
-    from: "whatsbulk",
+    from: "tarequl.islalm@gmail.com",
     // to: "whatsbulk.vercel.app",
     to: `${email}`,
     subject: "Password Reset Request",

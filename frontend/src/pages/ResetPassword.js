@@ -18,7 +18,7 @@ export default function ResetPassword() {
         token,
       };
       const res = await fetch(
-        `http://localhost:8800/api/auth/reset-password`,
+        `https://admin-panel-auth.vercel.app/api/auth/reset-password`,
         {
           method: "POST",
           credentials: "include",
