@@ -38,5 +38,3 @@ https://whatsbulk.vercel.app/
 ![App Screenshot](https://i.ibb.co/YB0fwVh/dashboard2.png)
 
 
-![App Screenshot](https://i.ibb.co/Ctx4yPm/login-feature.png)
-
