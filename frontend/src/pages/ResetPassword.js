@@ -86,7 +86,7 @@ export default function ResetPassword() {
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex items-center justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Reset Password
