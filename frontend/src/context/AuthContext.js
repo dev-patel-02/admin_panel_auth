@@ -8,14 +8,17 @@ export const AuthContextProvider = ({ children }) => {
   );
   // const baseUrl = process.env.REACT_APP_BASE_URL;
   const login = async (inputs) => {
-    const res = await fetch(`http://localhost:8800/api/auth/login`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify(inputs),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `https://admin-panel-auth.vercel.app/api/auth/login`,
+      {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(inputs),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await res.json();
 
@@ -23,13 +26,16 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = async (inputs) => {
-    const res = await fetch(`http://localhost:8800/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `https://admin-panel-auth.vercel.app/api/auth/logout`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     localStorage.removeItem("user");
     window.location.reload();
     //setCurrentUser(null);

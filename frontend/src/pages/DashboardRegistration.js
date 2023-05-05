@@ -3,7 +3,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { isValidEmail } from "../utils/auth";
 import { AuthContext } from "../context/AuthContext";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function DashboardRegistration() {
   const [inputs, setInputs] = useState({
@@ -67,14 +67,17 @@ function DashboardRegistration() {
     try {
       const baseUrl = process.env.REACT_APP_BASE_URL;
       // console.log(baseUrl)
-      const res = await fetch(`http://localhost:8800/api/auth/register`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(inputs),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        `https://admin-panel-auth.vercel.app/api/auth/register`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await res.json();
 
@@ -89,7 +92,7 @@ function DashboardRegistration() {
       if (data.status) {
         setCurrentUser(data.data);
         navigate("/");
-        toast.success('Register Successfully!', {
+        toast.success("Register Successfully!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -98,7 +101,7 @@ function DashboardRegistration() {
           draggable: true,
           progress: undefined,
           theme: "light",
-          });
+        });
       } else {
         setErrors((prev) => ({ ...prev, ["username"]: data.message }));
       }
