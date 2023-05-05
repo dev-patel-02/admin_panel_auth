@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
 
 function BookingForm({ booking, setBooking, editMode, mode, formData }) {
+  const filterItem = booking.filter((f) => f.id !== formData.id);
   const [startDate, setStartDate] = useState(new Date());
-  console.log(booking);
+  // const [totalAmount, setTotalAmount] = useState(0);
   const {
     register,
     formState: { errors },
@@ -31,16 +32,19 @@ function BookingForm({ booking, setBooking, editMode, mode, formData }) {
       sender: data?.sender,
       weight: data?.weight,
     };
-    const newFormArray = [...booking, formData];
+    const newFormArray = [...filterItem, formData];
     localStorage.setItem("booking", JSON.stringify(newFormArray));
-    setBooking(newFormArray);
+    if (newFormArray) {
+      setBooking(newFormArray);
+    }
     reset();
   };
   useEffect(() => {
     const bookingData = localStorage.getItem("booking");
     const data2 = JSON.parse(bookingData);
-
-    setBooking(data2);
+    if (bookingData) {
+      setBooking(data2);
+    }
   }, [setBooking]);
 
   return (
@@ -307,33 +311,7 @@ function BookingForm({ booking, setBooking, editMode, mode, formData }) {
                   )}
                 </div>
               </div>
-              <div className="flex mt-4">
-                <div className="w-3/4 mr-4">
-                  <input
-                    type="text"
-                    disabled
-                    className="px-3 py-2 text-black font-bold bg-gray-200 rounded text-sm  w-full"
-                    value="NET Amt"
-                  />
-                </div>
-                <div className=" w-1/4">
-                  <input
-                    type="number"
-                    {...register("netAmt", {
-                      required: true,
-                    })}
-                    aria-invalid={errors.netAmt ? "true" : "false"}
-                    className="border  px-3 py-2 outline-none rounded text-gray-500 text-sm  w-full"
-                    placeholder="Amount"
-                    defaultValue={editMode ? formData.netAmt : ""}
-                  />
-                  {errors.netAmt?.type === "required" && (
-                    <p role="alert" className="text-red-500">
-                      Amount is required
-                    </p>
-                  )}
-                </div>
-              </div>
+
               <div className="flex mt-4">
                 <div className="w-3/4 mr-4">
                   <input
@@ -359,6 +337,29 @@ function BookingForm({ booking, setBooking, editMode, mode, formData }) {
                       Amount is required
                     </p>
                   )}
+                </div>
+              </div>
+              <div className="flex mt-4">
+                <div className="w-3/4 mr-4">
+                  <input
+                    type="text"
+                    disabled
+                    className="px-3 py-2 text-black font-bold bg-gray-200 rounded text-sm  w-full"
+                    value="NET Amt"
+                  />
+                </div>
+                <div className=" w-1/4">
+                  <input
+                    type="number"
+                    {...register("netAmt", {
+                      required: true,
+                    })}
+                    aria-invalid={errors.netAmt ? "true" : "false"}
+                    className="border  px-3 py-2 outline-none rounded text-gray-500 text-sm  w-full"
+                    placeholder="Amount"
+                    disabled
+                    defaultValue={editMode ? formData.netAmt : ""}
+                  />
                 </div>
               </div>
             </div>

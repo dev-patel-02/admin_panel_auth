@@ -22,13 +22,14 @@ function Booking() {
       remark: "vsdvsdv",
       sender: "Exelenct Global llp",
       weight: "10",
-    },{
+    },
+    {
       carrier: "Janani",
       center: "Shova Corporation",
       consignment: "1477121",
       date: "2023-03-27T13:01:49.000Z",
       grossAmt: "4700",
-      id: 1681789336006,
+      id: 1681789378366,
       insuranceAmt: "4200",
       mobileNo: "01475243744",
       netAmt: "78000",
@@ -62,7 +63,7 @@ function Booking() {
       consignment: "1477121",
       date: "2023-03-27T13:01:49.000Z",
       grossAmt: "4700",
-      id: 1681789336006,
+      id: 1681789336786,
       insuranceAmt: "4200",
       mobileNo: "01475243744",
       netAmt: "78000",
@@ -72,14 +73,16 @@ function Booking() {
       remark: "vsdfdbfdgsdv",
       sender: "Shova Corporation",
       weight: "1000",
-    }
+    },
   ]);
+
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
 
   const handleEdit = (id) => {
     setEditMode(true);
     const selected = booking?.find((b) => b.id === id);
+    
     setFormData(selected);
   };
   const mode = () => {

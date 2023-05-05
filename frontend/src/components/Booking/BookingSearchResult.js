@@ -4,6 +4,7 @@ import { RiDeleteBin6Line, RiPrinterFill } from "react-icons/ri";
 import { TiEdit } from "react-icons/ti";
 
 export default function BookingSearchResult({ booking, handleEdit }) {
+  // console.log(booking);
   return (
     <section className=" w-3/5 border-t-4 border-blue-400 bg-blueGray-50">
       <div className="flex-auto px-4 lg:px-5  py-4 pt-0 bg-white">
