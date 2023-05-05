@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { RxInfoCircled } from "react-icons/rx";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SendLink() {
   const [email, setEmail] = useState("");
-  const [success, setSuccess] = useState("");
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (email) {
-      const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/reset`, {
+      const res = await fetch(`http://localhost:8800/api/auth/reset`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ email }),
@@ -20,7 +20,16 @@ function SendLink() {
       const data = await res.json();
 
       if (data.status === 1) {
-        setSuccess(data.message);
+        toast.success(`${data.message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setEmail("");
       }
     }
@@ -29,11 +38,7 @@ function SendLink() {
     <div className=" flex items-center justify-center pt-40 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-gray-200 py-6 px-6 rounded">
         <div>
-          {success && (
-            <p className="text-white text-center bg-green-500 my-8">
-              {success}
-            </p>
-          )}
+          
           <p className="text-center flex justify-center normal-case text-3xl  text-[#B66DFF] Righteous">
             <RxInfoCircled size={60} />
           </p>

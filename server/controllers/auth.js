@@ -6,7 +6,7 @@ import randomstring from "randomstring";
 import nodemailer from "nodemailer";
 
 const register = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -29,7 +29,7 @@ const register = (req, res) => {
     const q = "INSERT INTO registration (email, name, password) VALUES (?)";
     const values = [req.body.email, req.body.username, hashedPassword];
     db.query(q, [values], (error, data) => {
-      console.log("data", data);
+      // console.log("data", data);
       if (error) return res.json(error);
 
       const query = "SELECT * FROM registration WHERE id = ?";
@@ -147,7 +147,7 @@ const resetPasswordMessage = (req, res) => {
           if (error) {
             console.log(error);
           }
-          console.log(info);
+          // console.log(info);
 
           if (info.response) {
             console.log("Email sent: " + info.response);

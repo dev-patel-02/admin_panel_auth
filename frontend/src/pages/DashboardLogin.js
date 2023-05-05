@@ -56,6 +56,7 @@ function DashboardLogin() {
 
       if (data.status) {
         navigate("/dashboard");
+
         window.location.reload();
         setCurrentUser(data.data);
       } else {
@@ -141,7 +142,7 @@ function DashboardLogin() {
           <div>
             <input
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#B66DFF] outline-none"
+              className="group cursor-pointer relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#B66DFF] outline-none"
               value="Sign in"
             />
           </div>

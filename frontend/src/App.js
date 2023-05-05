@@ -13,6 +13,9 @@ import AddForm from "./components/Party/AddForm";
 import DashboardRegistration from "./pages/DashboardRegistration";
 import Reset from "./pages/ResetPassword";
 import SendLink from "./pages/SendLink";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
   const Protected = ({ isLoggedIn, children }) => {
@@ -107,6 +110,7 @@ function App() {
           ></Route>
         </Route>
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

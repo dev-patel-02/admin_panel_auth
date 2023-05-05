@@ -7,13 +7,13 @@ app.set("view engine", "ejs");
 
 // Middleware configuration
 // origin: "http://localhost:3000"
-// ,
+// origin: "https://whatsbulk.vercel.app"
 
 app.use(express.json()); // parses incoming requests with JSON payloads
 
 app.use(
   cors({
-    origin: "https://whatsbulk.vercel.app",
+    origin: "http://localhost:3001",
     credentials: true,
   })
 );

@@ -3,6 +3,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { isValidEmail } from "../utils/auth";
 import { AuthContext } from "../context/AuthContext";
+import {  toast } from 'react-toastify';
 
 function DashboardRegistration() {
   const [inputs, setInputs] = useState({
@@ -66,7 +67,7 @@ function DashboardRegistration() {
     try {
       const baseUrl = process.env.REACT_APP_BASE_URL;
       // console.log(baseUrl)
-      const res = await fetch(`https://admin-panel-auth.vercel.app/api/auth/register`, {
+      const res = await fetch(`http://localhost:8800/api/auth/register`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(inputs),
@@ -87,7 +88,17 @@ function DashboardRegistration() {
 
       if (data.status) {
         setCurrentUser(data.data);
-        navigate("/dashboard");
+        navigate("/");
+        toast.success('Register Successfully!', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       } else {
         setErrors((prev) => ({ ...prev, ["username"]: data.message }));
       }
@@ -124,6 +135,7 @@ function DashboardRegistration() {
                 id="username"
                 name="username"
                 type="username"
+                autoComplete="username"
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Full Name"
                 onChange={handleChange}
@@ -138,6 +150,7 @@ function DashboardRegistration() {
                 id="email-address"
                 name="email"
                 type="email"
+                autoComplete="email"
                 onChange={handleChange}
                 className="appearance-none   relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
@@ -152,6 +165,7 @@ function DashboardRegistration() {
                 id="password"
                 name="password"
                 type="password"
+                autoComplete="current-password"
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 onChange={handleChange}
                 placeholder="Password"
@@ -163,7 +177,7 @@ function DashboardRegistration() {
           <div>
             <input
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#B66DFF] outline-none"
+              className="group cursor-pointer relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#B66DFF] outline-none"
               value="Sign up"
             />
           </div>
