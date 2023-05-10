@@ -78,11 +78,9 @@ function Booking() {
 
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
-
   const handleEdit = (id) => {
     setEditMode(true);
     const selected = booking?.find((b) => b.id === id);
-    
     setFormData(selected);
   };
   const mode = () => {

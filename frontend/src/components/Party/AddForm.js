@@ -7,7 +7,36 @@ const AddForm = () => {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
   const [data, setData] = useState([]);
-
+  const [partyData, setPartyData] = useState([
+    {
+      _id: "1",
+      name: "Hurley Hooper",
+      contactPerson: "ZENTURY",
+      email: "hurleyhooper@zentury.com",
+      mobile: "(834) 414-2460",
+    },
+    {
+      _id: "2",
+      name: "Pena Taylor",
+      contactPerson: "NETUR",
+      email: "penataylor@netur.com",
+      mobile: "(989) 472-2812",
+    },
+    {
+      _id: "3",
+      name: "Maritza Owens",
+      contactPerson: "SPORTAN",
+      email: "maritzaowens@sportan.com",
+      mobile: "(880) 528-3428",
+    },
+    {
+      _id: "4",
+      name: "Rosario Ferguson",
+      contactPerson: "ENDICIL",
+      email: "rosarioferguson@endicil.com",
+      mobile: "(942) 471-3620",
+    },
+  ]);
   useEffect(() => {
     fetch("parties.json")
       .then((res) => res.json())
@@ -15,10 +44,8 @@ const AddForm = () => {
   }, []);
   const handlePartyEdit = (id) => {
     setEditMode(true);
-    const selected = data?.find((d) => d._id === id);
+    const selected = partyData?.find((d) => d._id === id);
     setFormData(selected);
-    console.log(selected);
-
   };
   const mode = () => {
     setEditMode(false);
@@ -32,8 +59,19 @@ const AddForm = () => {
         <span className="px-4 font-bold">Add Party</span>
       </p>
       <div className="flex justify-center pt-8 pb-14">
-        <AddParties editMode={editMode} mode={mode} formData={formData}/>
-        <AllParties data={data} handlePartyEdit={handlePartyEdit} />
+        <AddParties
+          data={data}
+          editMode={editMode}
+          mode={mode}
+          partyData={partyData}
+          formData={formData}
+          setPartyData={setPartyData} setEditMode={setEditMode}
+        />
+        <AllParties
+          data={data}
+          partyData={partyData}
+          handlePartyEdit={handlePartyEdit}
+        />
       </div>
     </div>
   );

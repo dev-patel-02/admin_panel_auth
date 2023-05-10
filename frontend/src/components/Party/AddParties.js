@@ -1,137 +1,209 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdCancel, MdOutlineCheck } from "react-icons/md";
 
-function AddParties({ editMode, mode, formData }) {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCIty] = useState("");
-  const [state, setState] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
-  const [phone, setPhone] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [gstNo, setGstNo] = useState("");
-  const [fuelCharge, setFuelCharge] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [addressError, setAddressError] = useState("");
-  const [addressError2, setAddressError2] = useState("");
-  const [cityError, setCityError] = useState("");
-  const [stateError, setStateError] = useState("");
-  const [contactNameError, setContactNameError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [mobileError, setMobileError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [websiteError, setWebsiteError] = useState("");
-  const [gstError, setGstError] = useState("");
-  const [fuelChargeError, setFuelChargeError] = useState("");
-  const [isCash, setIsCash] = useState(false);
+function AddParties({
+  editMode,
+  mode,
+  formData,
+  setEditMode,
+  partyData,
+  setPartyData,
+}) {
+  const filterItem = partyData.filter((f) => f._id !== formData._id);
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  const [inputs, setInputs] = useState({
+    name: "",
+    address_1: "",
+    address_2: "",
+    city: "",
+    state: "",
+    contactPerson: "",
+    phone: "",
+    mobile: "",
+    email: "",
+    website: "",
+    gstNo: "",
+    fuelCharge: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    address_1: "",
+    address_2: "",
+    city: "",
+    state: "",
+    contactPerson: "",
+    phone: "",
+    mobile: "",
+    email: "",
+    website: "",
+    gstNo: "",
+    fuelCharge: "",
+  });
+
+  const [isCash, setIsCash] = useState(true);
+  const handleChange = (e) => {
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }));
+
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let valid = true;
-    if (!name) {
-      setNameError("Name is required");
-      valid = false;
-    } else {
-      setNameError("");
+
+    let check = false;
+
+    if (inputs.name.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["name"]: "Party name should not be empty",
+      }));
     }
-    if (!address) {
-      setAddressError("Address is required");
-      valid = false;
-    } else {
-      setAddressError("");
+
+    if (inputs.address_1.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["address_1"]: "Address 1 should not be empty",
+      }));
     }
-    if (!address2) {
-      setAddressError2("Address is required");
-      valid = false;
-    } else {
-      setAddressError2("");
+
+    if (inputs.address_2.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["address_2"]: "Address 2 should not be empty",
+      }));
     }
-    if (!city) {
-      setCityError("City is required");
-      valid = false;
-    } else {
-      setCityError("");
+
+    if (inputs.city.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["city"]: "City should not be empty",
+      }));
     }
-    if (!state) {
-      setStateError("State is required");
-      valid = false;
-    } else {
-      setStateError("");
+
+    if (inputs.state.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["state"]: "State should not be empty",
+      }));
     }
-    if (!contactPerson) {
-      setContactNameError("Contact person name is required");
-      valid = false;
-    } else {
-      setContactNameError("");
+
+    if (inputs.contactPerson.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["contactPerson"]: "Contact Person should not be empty",
+      }));
     }
-    if (!phone) {
-      setPhoneError("Phone number is required");
-      valid = false;
-    } else if (!/^\d{11}$/.test(phone)) {
-      setPhoneError("Please enter a valid phone number");
-      valid = false;
-    } else {
-      setPhoneError("");
+
+    if (inputs.mobile.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["mobile"]: "Mobile should not be empty",
+      }));
     }
-    if (!mobile) {
-      setMobileError("Mobile number is required");
-      valid = false;
-    } else if (!/^\d{11}$/.test(mobile)) {
-      setMobileError("Please enter a valid mobile number");
-      valid = false;
-    } else {
-      setMobileError("");
+    if (inputs.phone.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["phone"]: "Phone should not be empty",
+      }));
+    } else if (!/^\d{11}$/.test(inputs.phone)) {
+      setErrors((prev) => ({
+        ...prev,
+        ["phone"]: "Please enter a valid phone number",
+      }));
     }
-    if (!email) {
-      setEmailError("Email is required");
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError("Please enter a valid email address");
-      valid = false;
-    } else {
-      setEmailError("");
+
+    if (inputs.email.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["email"]: "Email should not be empty",
+      }));
     }
-    if (!website) {
-      setWebsiteError("Website is required");
-      valid = false;
-    } else {
-      setWebsiteError("");
+
+    if (!isValidEmail(inputs.email)) {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["email"]: "Invalid email address",
+      }));
     }
-    if (!gstNo) {
-      setGstError("GST number is required");
-      valid = false;
-    } else {
-      setGstError("");
+
+    if (inputs.gstNo.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["gstNo"]: "GST No should not be empty",
+      }));
     }
-    if (!fuelCharge) {
-      setFuelChargeError("Fuel Charge is required");
-      valid = false;
-    } else if (!/^[0-9]+$/.test(fuelCharge)) {
-      setFuelChargeError("Please enter number");
-      valid = false;
-    } else {
-      setFuelChargeError("");
+
+    if (inputs.fuelCharge.trim() === "") {
+      check = true;
+      setErrors((prev) => ({
+        ...prev,
+        ["fuelCharge"]: "Fuel Charge should not be empty",
+      }));
     }
-    if (valid) {
-      console.log({
-        name,
-        address,
-        city,
-        state,
-        contactPerson,
-        phone,
-        mobile,
-        email,
-        website,
-        gstNo,
-        fuelCharge,
-        isCash,
+
+    if (check) return;
+    const partyFormData = {
+      _id: Date.now(),
+      name: inputs.name,
+      address1: inputs.address_1,
+      address2: inputs.address_2,
+      city: inputs.city,
+      state: inputs.state,
+      contactPerson: inputs.contactPerson,
+      phone: inputs.phone,
+      mobile: inputs.mobile,
+      email: inputs.email,
+      website: inputs.website,
+      gstNo: inputs.gstNo,
+      fuelCharge: inputs.fuelCharge,
+      isCash: isCash,
+    };
+
+    const newFormArray = [...filterItem, partyFormData];
+    localStorage.setItem("party", JSON.stringify(newFormArray));
+    if (newFormArray) {
+      setPartyData(newFormArray);
+      setInputs({
+        name: "",
+        address_1: "",
+        address_2: "",
+        city: "",
+        state: "",
+        contactPerson: "",
+        phone: "",
+        mobile: "",
+        email: "",
+        website: "",
+        gstNo: "",
+        fuelCharge: "",
       });
     }
+    setEditMode(false);
   };
+  useEffect(() => {
+    const data = localStorage.getItem("party");
+    const data2 = JSON.parse(data);
+    if (data) {
+      setPartyData(data2);
+    }
+  }, [setPartyData]);
   return (
     <form
       onSubmit={handleSubmit}
@@ -166,10 +238,13 @@ function AddParties({ editMode, mode, formData }) {
               id="name"
               placeholder="PARTY NAME"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData.name : name}
-              onChange={(e) => setName(e.target.value)}
+              defaultValue={editMode ? formData.name : inputs.name}
+              name="name"
+              onChange={handleChange}
+              // defaultValue={editMode ? formData.name : name}
+              // onChange={(e) => setName(e.target.value)}
             />
-            {nameError && <span style={{ color: "red" }}>{nameError}</span>}
+            <p className="text-red-500">{errors.name}</p>
           </div>
         </div>
         <div className="flex mt-6">
@@ -183,25 +258,29 @@ function AddParties({ editMode, mode, formData }) {
                 id="address"
                 placeholder="ADDRESS LINE 1"
                 className="border px-4 py-2 outline-none text-xl w-full"
-                value={editMode ? formData?.address : address}
-                onChange={(e) => setAddress(e.target.value)}
+                defaultValue={editMode ? formData?.address1 : inputs.address_1}
+                // onChange={(e) => setAddress(e.target.value)}
+                // value={inputs.address_1}
+                name="address_1"
+                onChange={handleChange}
               />
-              {addressError && (
-                <span style={{ color: "red" }}>{addressError}</span>
-              )}
+              <p className="text-red-500">{errors.address_1}</p>
             </div>
             <div className="mt-2">
               <input
                 type="text"
-                id="address2"
+                id="address_2"
                 placeholder="ADDRESS LINE 2 "
                 className="border px-4 py-2 outline-none text-xl w-full"
-                value={editMode ? formData?.address2 : address2}
-                onChange={(e) => setAddress2(e.target.value)}
+                defaultValue={
+                  editMode ? formData?.address2 : inputs?.address_2
+                }
+                // onChange={(e) => setAddress2(e.target.value)}
+                // value={inputs.address_2}
+                name="address_2"
+                onChange={handleChange}
               />
-              {addressError2 && (
-                <span style={{ color: "red" }}>{addressError2}</span>
-              )}
+              <p className="text-red-500">{errors.address_2}</p>
             </div>
           </div>
         </div>
@@ -215,10 +294,13 @@ function AddParties({ editMode, mode, formData }) {
               id="city"
               placeholder="CITY"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.city : city}
-              onChange={(e) => setCIty(e.target.value)}
+              // value={inputs.city}
+              name="city"
+              onChange={handleChange}
+              defaultValue={editMode ? formData?.city : inputs.city}
+              // onChange={(e) => setCIty(e.target.value)}
             />
-            {cityError && <span style={{ color: "red" }}>{cityError}</span>}
+            <p className="text-red-500">{errors.city}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -231,10 +313,13 @@ function AddParties({ editMode, mode, formData }) {
               id="State"
               placeholder="STATE"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.state : state}
-              onChange={(e) => setState(e.target.value)}
+              // value={inputs.state}
+              name="state"
+              onChange={handleChange}
+              defaultValue={editMode ? formData?.state : inputs.state}
+              // onChange={(e) => setState(e.target.value)}
             />
-            {stateError && <span style={{ color: "red" }}>{stateError}</span>}
+            <p className="text-red-500">{errors.state}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -247,12 +332,15 @@ function AddParties({ editMode, mode, formData }) {
               id="contactPerson"
               placeholder="CONTACT PERSON NAME"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.contactPerson : contactPerson}
-              onChange={(e) => setContactPerson(e.target.value)}
+              defaultValue={
+                editMode ? formData?.contactPerson : inputs.contactPerson
+              }
+              // onChange={(e) => setContactPerson(e.target.value)}
+              // value={inputs.contactPerson}
+              name="contactPerson"
+              onChange={handleChange}
             />
-            {contactNameError && (
-              <span style={{ color: "red" }}>{contactNameError}</span>
-            )}
+            <p className="text-red-500">{errors.contactPerson}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -265,10 +353,13 @@ function AddParties({ editMode, mode, formData }) {
               id="phone"
               placeholder="PHONE"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.phone : phone}
-              onChange={(e) => setPhone(e.target.value)}
+              // value={inputs.phone}
+              name="phone"
+              onChange={handleChange}
+              defaultValue={editMode ? formData?.phone : inputs.phone}
+              // onChange={(e) => setPhone(e.target.value)}
             />
-            {phoneError && <span style={{ color: "red" }}>{phoneError}</span>}
+            <p className="text-red-500">{errors.phone}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -281,10 +372,12 @@ function AddParties({ editMode, mode, formData }) {
               id="mobile"
               placeholder="MOBILE NO"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.mobile : mobile}
-              onChange={(e) => setMobile(e.target.value)}
+              // value={inputs.mobile}
+              defaultValue={editMode ? formData?.phone : inputs.mobile}
+              name="mobile"
+              onChange={handleChange}
             />
-            {mobileError && <span style={{ color: "red" }}>{mobileError}</span>}
+            <p className="text-red-500">{errors.mobile}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -297,10 +390,13 @@ function AddParties({ editMode, mode, formData }) {
               id="eamil"
               placeholder="EMAIL ADDRESS"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.email : email}
-              onChange={(e) => setEmail(e.target.value)}
+              defaultValue={editMode ? formData?.email : inputs.email}
+              // onChange={(e) => setEmail(e.target.value)}
+              // value={inputs.email}
+              name="email"
+              onChange={handleChange}
             />
-            {emailError && <span style={{ color: "red" }}>{emailError}</span>}
+            <p className="text-red-500">{errors.email}</p>
           </div>
         </div>{" "}
         <div className="flex items-center mt-4">
@@ -313,14 +409,15 @@ function AddParties({ editMode, mode, formData }) {
               id="website"
               placeholder="WEBSITE"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.website : website}
-              onChange={(e) => setWebsite(e.target.value)}
+              defaultValue={editMode ? formData?.website : inputs.website}
+              // onChange={(e) => setWebsite(e.target.value)}
+              // value={inputs.website}
+              name="website"
+              onChange={handleChange}
             />
-            {websiteError && (
-              <span style={{ color: "red" }}>{websiteError}</span>
-            )}
+            <p className="text-red-500">{errors.website}</p>
           </div>
-        </div>{" "}
+        </div>
         <div className="flex items-center mt-4">
           <label htmlFor="name" className="w-1/4 text-xl text-gray-400">
             Gst No
@@ -331,10 +428,13 @@ function AddParties({ editMode, mode, formData }) {
               id="gstNo"
               placeholder="GST NO"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.gstNo : gstNo}
-              onChange={(e) => setGstNo(e.target.value)}
+              defaultValue={editMode ? formData?.gstNo : inputs.gstNo}
+              // onChange={(e) => setGstNo(e.target.value)}
+              // value={inputs.gstNo}
+              name="gstNo"
+              onChange={handleChange}
             />
-            {gstError && <span style={{ color: "red" }}>{gstError}</span>}
+            <p className="text-red-500">{errors.gstNo}</p>
           </div>
         </div>
         <div className="flex items-center mt-4">
@@ -347,12 +447,15 @@ function AddParties({ editMode, mode, formData }) {
               id="name"
               placeholder="FUEL CHARGE"
               className="border px-4 py-2 outline-none text-xl w-full"
-              value={editMode ? formData?.fuelCharge : fuelCharge}
-              onChange={(e) => setFuelCharge(e.target.value)}
+              defaultValue={editMode ? formData?.fuelCharge : inputs.fuelCharge}
+              // onChange={(e) => setFuelCharge(e.target.value)}
+
+              // value={inputs.fuelCharge}
+              name="fuelCharge"
+              onChange={handleChange}
             />
-            {fuelChargeError && (
-              <span style={{ color: "red" }}>{fuelChargeError}</span>
-            )}
+
+            <p className="text-red-500">{errors.fuelCharge}</p>
           </div>
         </div>
         <div className="flex justify-center my-8">
